@@ -15,6 +15,8 @@ import fnmatch
 import shlex
 from reclass.datatypes import Entity, Classes, Parameters
 from reclass.errors import MappingFormatError, ClassNotFound
+from reclass.errors import UndefinedVariableError
+
 
 class Core(object):
 
@@ -119,8 +121,13 @@ class Core(object):
                                           nodename=base_entity.name)
         ret = self._recurse_entity(node_entity, merge_base, seen=seen,
                                    nodename=node_entity.name)
-        ret.interpolate()
-        return ret
+        try:
+            ret.interpolate()
+            return ret
+        except UndefinedVariableError as e:
+            e.set_context('%s @ %s' % (e.context, nodename))
+            raise e
+
 
     def _nodeinfo_as_dict(self, nodename, entity):
         ret = {'__reclass__' : {'node': entity.name, 'name': nodename,

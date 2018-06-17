@@ -6,8 +6,12 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
-from classes import Classes
+from .classes import Classes
 
 class Applications(Classes):
     '''
@@ -62,4 +66,4 @@ class Applications(Classes):
         contents = self._items + \
                 ['%s%s' % (self._negation_prefix, i) for i in self._negations]
         return "%s(%r, %r)" % (self.__class__.__name__, contents,
-                               self._negation_prefix)
+                               str(self._negation_prefix))

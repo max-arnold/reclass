@@ -6,19 +6,26 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 import os, sys
 import fnmatch
 from reclass.storage import NodeStorageBase
-from yamlfile import YamlFile
-from directory import Directory
 from reclass.datatypes import Entity
 import reclass.errors
+from .yamlfile import YamlFile
+from .directory import Directory
+
 
 FILE_EXTENSION = '.yml'
 STORAGE_NAME = 'yaml_fs'
 
+
 def vvv(msg):
-    #print >>sys.stderr, msg
+    #print(msg, file=sys.stderr)
     pass
 
 class ExternalNodeStorage(NodeStorageBase):
@@ -82,7 +89,7 @@ class ExternalNodeStorage(NodeStorageBase):
             relpath = self._nodes[name]
             path = os.path.join(self.nodes_uri, relpath)
             name = os.path.splitext(relpath)[0]
-        except KeyError, e:
+        except KeyError as e:
             raise reclass.errors.NodeNotFound(self.name, name, self.nodes_uri)
         entity = YamlFile(path).get_entity(name, self._default_environment)
         return entity
@@ -91,7 +98,7 @@ class ExternalNodeStorage(NodeStorageBase):
         vvv('GET CLASS {0}'.format(name))
         try:
             path = os.path.join(self.classes_uri, self._classes[name])
-        except KeyError, e:
+        except KeyError as e:
             raise reclass.errors.ClassNotFound(self.name, name, self.classes_uri)
         entity = YamlFile(path).get_entity(name)
         return entity

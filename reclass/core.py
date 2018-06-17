@@ -6,16 +6,17 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 import time
-#import types
 import re
-#import sys
 import fnmatch
 import shlex
 from reclass.datatypes import Entity, Classes, Parameters
 from reclass.errors import MappingFormatError, ClassNotFound
-from reclass.errors import UndefinedVariableError
 
 
 class Core(object):
@@ -49,7 +50,7 @@ class Core(object):
             regexp = True
         try:
             key = lexer.get_token()
-        except ValueError, e:
+        except ValueError as e:
             raise MappingFormatError('Error in mapping "{0}": missing closing '
                                      'quote (or slash)'.format(instr))
         if regexp:
@@ -94,7 +95,7 @@ class Core(object):
             if klass not in seen:
                 try:
                     class_entity = self._storage.get_class(klass)
-                except ClassNotFound, e:
+                except ClassNotFound as e:
                     e.set_nodename(nodename)
                     raise e
 
@@ -128,7 +129,6 @@ class Core(object):
             e.set_context('%s @ %s' % (e.context, nodename))
             raise e
 
-
     def _nodeinfo_as_dict(self, nodename, entity):
         ret = {'__reclass__' : {'node': entity.name, 'name': nodename,
                                 'uri': entity.uri,
@@ -150,7 +150,7 @@ class Core(object):
         nodes = {}
         applications = {}
         classes = {}
-        for f, nodeinfo in entities.iteritems():
+        for f, nodeinfo in entities.items():
             d = nodes[f] = self._nodeinfo_as_dict(f, nodeinfo)
             for a in d['applications']:
                 if a in applications:

@@ -6,10 +6,16 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from reclass import datatypes
 import yaml
 import os
 from reclass.errors import NotFoundError
+
 
 class YamlFile(object):
 
@@ -25,7 +31,7 @@ class YamlFile(object):
     path = property(lambda self: self._path)
 
     def _read(self):
-        fp = file(self._path)
+        fp = open(self._path, 'rb')
         data = yaml.safe_load(fp)
         if data is not None:
             self._data = data

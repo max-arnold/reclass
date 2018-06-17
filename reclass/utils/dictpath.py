@@ -6,8 +6,18 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
-import types, re
+import re
+
+try:
+    from types import StringTypes
+except ImportError:
+    StringTypes = (str, )
+
 
 class DictPath(object):
     '''
@@ -59,7 +69,7 @@ class DictPath(object):
         if contents is None:
             self._parts = []
         else:
-            if isinstance(contents, types.StringTypes):
+            if isinstance(contents, StringTypes):
                 self._parts = self._split_string(contents)
             elif isinstance(contents, tuple):
                 self._parts = list(contents)
@@ -76,7 +86,7 @@ class DictPath(object):
         return self._delim.join(str(i) for i in self._parts)
 
     def __eq__(self, other):
-        if isinstance(other, types.StringTypes):
+        if isinstance(other, StringTypes):
             other = DictPath(self._delim, other)
 
         return self._parts == other._parts \

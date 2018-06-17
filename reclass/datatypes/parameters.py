@@ -6,7 +6,16 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
-import types
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
+try:
+    from types import StringTypes
+except ImportError:
+    StringTypes = (str, )
+
 from reclass.defaults import PARAMETER_INTERPOLATION_DELIMITER,\
                              PARAMETER_DICT_KEY_OVERRIDE_PREFIX
 from reclass.utils.dictpath import DictPath
@@ -78,7 +87,7 @@ class Parameters(object):
             # will be added again further on
             del self._occurrences[path]
 
-        if self.delimiter is None or not isinstance(new, (types.StringTypes,
+        if self.delimiter is None or not isinstance(new, (StringTypes,
                                                           RefValue)):
             # either there is no delimiter defined (and hence no references
             # are being used), or the new value is not a string (and hence
@@ -116,7 +125,7 @@ class Parameters(object):
             ret = [cur]
             offset = 1
 
-        for i in xrange(len(new)):
+        for i in range(len(new)):
             ret.append(self._merge_recurse(None, new[i], path.new_subpath(offset + i)))
         return ret
 
@@ -155,7 +164,7 @@ class Parameters(object):
 
         ovrprfx = Parameters.DICT_KEY_OVERRIDE_PREFIX
 
-        for key, newvalue in new.iteritems():
+        for key, newvalue in new.items():
             if key.startswith(ovrprfx) and not initmerge:
                 ret[key.lstrip(ovrprfx)] = newvalue
             else:
@@ -232,7 +241,7 @@ class Parameters(object):
             # we could use a view here, but this is simple enough:
             # _interpolate_inner removes references from the refs hash after
             # processing them, so we cannot just iterate the dict
-            path, refvalue = self._occurrences.iteritems().next()
+            path, refvalue = list(self._occurrences.items())[0]
             self._interpolate_inner(path, refvalue)
 
     def _interpolate_inner(self, path, refvalue):

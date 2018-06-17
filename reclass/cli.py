@@ -6,6 +6,10 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 import sys, os, posix
 
@@ -16,6 +20,7 @@ from reclass.errors import ReclassException
 from reclass.defaults import *
 from reclass.constants import MODE_NODEINFO
 from reclass.version import *
+
 
 def main():
     try:
@@ -37,9 +42,9 @@ def main():
         else:
             data = reclass.inventory()
 
-        print output(data, options.output, options.pretty_print)
+        print(output(data, options.output, options.pretty_print))
 
-    except ReclassException, e:
+    except ReclassException as e:
         e.exit_with_message(sys.stderr)
 
     sys.exit(posix.EX_OK)

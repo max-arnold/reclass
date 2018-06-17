@@ -6,14 +6,21 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from reclass.datatypes import Parameters
 from reclass.defaults import PARAMETER_INTERPOLATION_SENTINELS
 from reclass.errors import InfiniteRecursionError
 import unittest
+
 try:
     import unittest.mock as mock
 except ImportError:
     import mock
+
 
 SIMPLE = {'one': 1, 'two': 2, 'three': 3}
 
@@ -121,7 +128,7 @@ class TestParameters(unittest.TestCase):
         mergee = {'five':5,'four':4,'None':None,'tuple':(1,2,3)}
         p2, b2 = self._construct_mocked_params(mergee)
         p1.merge(p2)
-        for key, value in mergee.iteritems():
+        for key, value in mergee.items():
             # check that each key, value in mergee resulted in a get call and
             # a __setitem__ call against b1 (the merge target)
             self.assertIn(mock.call(key), b1.get.call_args_list)

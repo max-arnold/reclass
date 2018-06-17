@@ -10,6 +10,10 @@
 # Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
 # Released under the terms of the Artistic Licence 2.0
 #
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 import os, sys, posix, optparse
 
@@ -75,15 +79,15 @@ def cli():
             apps = data['applications']
             if options.applications_postfix:
                 postfix = options.applications_postfix
-                groups.update([(k + postfix, v) for k,v in apps.iteritems()])
+                groups.update([(k + postfix, v) for k,v in apps.items()])
             else:
                 groups.update(apps)
 
             data = groups
 
-        print output(data, options.output, options.pretty_print)
+        print(output(data, options.output, options.pretty_print))
 
-    except ReclassException, e:
+    except ReclassException as e:
         e.exit_with_message(sys.stderr)
 
     sys.exit(posix.EX_OK)

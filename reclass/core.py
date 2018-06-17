@@ -16,7 +16,7 @@ import re
 import fnmatch
 import shlex
 from reclass.datatypes import Entity, Classes, Parameters
-from reclass.errors import MappingFormatError, ClassNotFound
+from reclass.errors import MappingFormatError, ClassNotFound, UndefinedVariableError
 
 
 class Core(object):

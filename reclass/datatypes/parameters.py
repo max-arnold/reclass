@@ -165,6 +165,7 @@ class Parameters(object):
         ovrprfx = Parameters.DICT_KEY_OVERRIDE_PREFIX
 
         for key, newvalue in new.items():
+            key = str(key)
             if key.startswith(ovrprfx) and not initmerge:
                 ret[key.lstrip(ovrprfx)] = newvalue
             else:

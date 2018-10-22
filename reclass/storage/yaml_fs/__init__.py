@@ -70,6 +70,8 @@ class ExternalNodeStorage(NodeStorageBase):
                 relpath = os.path.relpath(dirpath, basedir)
                 if callable(name_mangler):
                     relpath, name = name_mangler(relpath, name)
+                name = str(name)
+                relpath = str(relpath)
                 uri = os.path.join(dirpath, f)
                 if name in ret:
                     E = reclass.errors.DuplicateNodeNameError

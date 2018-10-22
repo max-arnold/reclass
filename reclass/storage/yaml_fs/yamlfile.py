@@ -53,7 +53,7 @@ class YamlFile(object):
             parameters = {}
         parameters = datatypes.Parameters(parameters)
 
-        env = self._data.get('environment', default_environment)
+        env = str(self._data.get('environment', default_environment))
 
         if name is None:
             name = self._path
